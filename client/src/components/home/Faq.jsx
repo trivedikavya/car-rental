@@ -95,17 +95,28 @@ const FAQ = () => {
   };
 
   return (
-    <section className="py-20 bg-white">
+      <section id="faq-section" className="py-20 bg-white">
       <div className="container mx-auto px-4 max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-100 rounded-full mb-4">
-            <HelpCircle className="w-5 h-5 text-orange-500" />
-            <span className="text-orange-700 font-medium">Need Help?</span>
-          </div>
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          onClick={() => {
+          const section = document.getElementById("faq-section");
+        if (section) {
+          section.scrollIntoView({ behavior: "smooth" });
+        }
+      }}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-orange-100 rounded-full mb-4 
+          cursor-pointer hover:bg-orange-200 transition-colors duration-200"
+        >
+        <HelpCircle className="w-5 h-5 text-orange-500" />
+          <span className="text-orange-700 font-medium">Need Help?</span>
+        </motion.div>
+        
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Frequently Asked Questions
           </h2>
