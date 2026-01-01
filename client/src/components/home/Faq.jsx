@@ -95,7 +95,7 @@ const FAQ = () => {
   };
 
   return (
-    <section className="bg-white dark:bg-zinc-950 text-gray-900 dark:text-zinc-100 transition-colors duration-300 py-20">
+<section id="faq-section" className="bg-white dark:bg-zinc-950 text-gray-900 dark:text-zinc-100 transition-colors duration-300 py-20">
       <div className="container mx-auto px-4 max-w-6xl">
         {/* Header Section */}
         <motion.div
@@ -103,11 +103,22 @@ const FAQ = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-100 dark:bg-orange-900/30 rounded-full mb-4">
-            <HelpCircle className="w-5 h-5 text-orange-500" />
-            <span className="text-orange-700 dark:text-orange-400 font-medium">Need Help?</span>
-          </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 dark:text-white">
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          onClick={() => {
+            const section = document.getElementById("faq-section");
+            if (section) {
+              section.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-orange-100 dark:bg-orange-900/30 rounded-full mb-4 
+          cursor-pointer hover:bg-orange-200 dark:hover:bg-orange-800 transition-colors duration-200"
+        >
+          <HelpCircle className="w-5 h-5 text-orange-500" />
+          <span className="text-orange-700 dark:text-orange-400 font-medium">Need Help?</span>
+        </motion.div>
+        
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 dark:text-white">
             Frequently Asked Questions
           </h2>
           <p className="text-gray-600 dark:text-zinc-400 max-w-2xl mx-auto">

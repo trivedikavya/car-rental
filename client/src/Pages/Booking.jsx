@@ -130,7 +130,7 @@ const CarDetailPage = () => {
                 <div className="flex flex-col">
                   <label className="text-sm font-medium text-gray-600 dark:text-zinc-400 mb-1">Pick-up Date</label>
                   <input
-                    type="date"
+                    type="datetime-local"
                     name="pickUpDate"
                     value={rentalDetails.pickUpDate}
                     onChange={handleChange}
@@ -142,7 +142,7 @@ const CarDetailPage = () => {
                 <div className="flex flex-col">
                   <label className="text-sm font-medium text-gray-600 dark:text-zinc-400 mb-1">Drop-off Date</label>
                   <input
-                    type="date"
+                    type="datetime-local"
                     name="dropOffDate"
                     value={rentalDetails.dropOffDate}
                     onChange={handleChange}
