@@ -55,7 +55,13 @@ const CarDetailPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Booking confirmed!");
+    //To handle Practical Error
+    if(rentalDetails.pickUpDate>=rentalDetails.dropOffDate){
+      alert("Drop-off date must be after pickup date!");
+      return;
+    }else{
+      alert("Booking confirmed!");
+    }
   };
 
   return (
