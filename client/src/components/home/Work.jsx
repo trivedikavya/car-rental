@@ -60,7 +60,7 @@ const Work = () => {
   ];
 
   return (
-    <section className="bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100 transition-colors duration-300 py-20">
+    <section id="work-section" className="bg-gray-50 dark:bg-zinc-950 text-gray-900 dark:text-zinc-100 transition-colors duration-300 py-20">
       <div className="container mx-auto px-4">
         {/* Header Section */}
         <motion.div
@@ -69,10 +69,22 @@ const Work = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-100 dark:bg-orange-900/30 rounded-full mb-4">
-            <CircleHelp className="w-5 h-5 text-orange-500" />
-            <span className="text-orange-700 dark:text-orange-400 font-medium">How It Works?</span>
-          </div>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            onClick={() => {
+          const section = document.getElementById("work-section");
+          if (section) {
+            section.scrollIntoView({ behavior: "smooth" });
+          }
+            }}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-orange-100 dark:bg-orange-900/30 rounded-full mb-4
+            cursor-pointer hover:bg-orange-200 dark:hover:bg-orange-800 transition-colors duration-200"
+          >
+          <CircleHelp className="w-5 h-5 text-orange-500" />
+          <span className="text-orange-700 dark:text-orange-400 font-medium">
+            How It Works?
+            </span>
+          </motion.div>
           <h2 className="text-4xl font-bold mb-6 mt-2 dark:text-white">
             Rent Your Dream Car in 4 Easy Steps
           </h2>
