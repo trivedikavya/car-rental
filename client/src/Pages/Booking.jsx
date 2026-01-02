@@ -60,7 +60,7 @@ const CarDetailPage = () => {
 
   return (
     selectedCar ? (
-      <div className="container mx-auto p-6 mt-20 transition-colors duration-300">
+      <div className="container mx-auto p-6 pt-28 transition-colors duration-300">
         <div className="flex flex-col md:flex-row md:space-x-10">
 
           {/* Car Image Container */}
