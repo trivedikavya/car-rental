@@ -164,6 +164,19 @@ function AdvancedControlPanel({
           ))}
         </div>
 
+        {/* Auto-Rotation Toggle */}
+        <div className="pt-2 border-t border-zinc-200 dark:border-zinc-700">
+          <button
+            onClick={() => setAutoRotate(!autoRotate)}
+            className={`w-full px-3 py-2 rounded text-xs font-semibold transition-colors ${
+              autoRotate 
+                ? 'bg-orange-500 text-white hover:bg-orange-600' 
+                : 'bg-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-300 dark:hover:bg-zinc-600'
+            }`}>
+            {autoRotate ? '⏸ Pause Rotation' : '▶ Auto Rotate'}
+          </button>
+        </div>
+
         {/* Export Values */}
         <div className="pt-2 border-t border-zinc-200 dark:border-zinc-700">
           <p className="font-semibold mb-1 text-zinc-700 dark:text-zinc-300">Current Values</p>
@@ -211,6 +224,8 @@ function Car3DModel() {
     maxPolar: 65       // Max vertical angle in degrees
   });
   const [isControlOpen, setIsControlOpen] = useState(false);
+  const [autoRotate, setAutoRotate] = useState(true); // Auto-rotation enabled by default
+  const autoRotateRef = useRef({ angle: 0, direction: 1, speed: 0.0003 });
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -366,9 +381,54 @@ function Car3DModel() {
       }
     );
 
-    // Animation loop
+    // Animation loop with auto-rotation
     const animate = () => {
       animationIdRef.current = requestAnimationFrame(animate);
+      
+      // Auto-rotation logic
+      if (autoRotate && controlsRef.current) {
+        const rotState = autoRotateRef.current;
+        
+        // Update angle
+        rotState.angle += rotState.speed * rotState.direction;
+        
+        // Calculate rotation limit in radians (180 degrees = π radians)
+        const maxRotation = Math.PI; // 180 degrees
+        
+        // Reverse direction when reaching limits
+        if (rotState.angle >= maxRotation) {
+          rotState.angle = maxRotation;
+          rotState.direction = -1;
+        } else if (rotState.angle <= 0) {
+          rotState.angle = 0;
+          rotState.direction = 1;
+        }
+        
+        // Apply rotation to controls
+        const centerAngle = Math.PI / 2;
+        const rotationLimit = (rotation.limit * Math.PI) / 180;
+        const minAngle = centerAngle - (rotationLimit / 2);
+        
+        // Map 0-π to the allowed rotation range
+        const mappedAngle = minAngle + (rotState.angle / maxRotation) * rotationLimit;
+        
+        // Set the azimuth angle directly
+        const currentAzimuth = controlsRef.current.getAzimuthalAngle();
+        const targetAzimuth = mappedAngle;
+        
+        // Smoothly interpolate to target angle
+        const newAzimuth = currentAzimuth + (targetAzimuth - currentAzimuth) * 0.1;
+        
+        // Update controls by setting position
+        const distance = Math.sqrt(
+          Math.pow(camera.position.x, 2) + 
+          Math.pow(camera.position.z, 2)
+        );
+        
+        camera.position.x = distance * Math.sin(newAzimuth);
+        camera.position.z = distance * Math.cos(newAzimuth);
+      }
+      
       controls.update();
       renderer.render(scene, camera);
     };
